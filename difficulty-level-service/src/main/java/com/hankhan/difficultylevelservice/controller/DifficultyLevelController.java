@@ -27,7 +27,7 @@ import java.util.List;
 @AllArgsConstructor
 public class DifficultyLevelController {
 
-    private DifficultyLevelService difficultyLevelService;
+    private final DifficultyLevelService difficultyLevelService;
 
     @GetMapping
     public ResponseEntity<List<DifficultyLevelDto>> getDifficultyLevelsBy(
