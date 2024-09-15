@@ -7,7 +7,7 @@ package com.hankhan.questionservice.service.impl;
 
 import com.hankhan.questionservice.dao.QuestionDao;
 import com.hankhan.questionservice.dto.QuestionDto;
-import com.hankhan.questionservice.feign.DifficultyLevelInterface;
+import com.hankhan.questionservice.feign.DifficultyLevelClient;
 import com.hankhan.questionservice.mapper.QuestionMapper;
 import com.hankhan.questionservice.model.Question;
 import com.hankhan.questionservice.service.QuestionService;
@@ -33,26 +33,26 @@ public class QuestionServiceImpl implements QuestionService {
 
     private QuestionDao questionDao;
     private QuestionMapper questionMapper;
-    private DifficultyLevelInterface difficultyLevelInterface;
+    private DifficultyLevelClient difficultyLevelClient;
 
     @Override
     public List<QuestionDto> findAll() {
         List<Question> questions = questionDao.findAll();
         if (questions.isEmpty()) return Collections.emptyList();
-        return questionMapper.toDtos(questions, difficultyLevelInterface);
+        return questionMapper.toDtos(questions, difficultyLevelClient);
     }
 
     @Override
     public QuestionDto findById(int id) {
         Question question = questionDao.findById(id)
                 .orElseThrow(() -> new NoSuchElementException(String.format("The question is not found by id: %d", id)));
-        return questionMapper.toDto(question, difficultyLevelInterface);
+        return questionMapper.toDto(question, difficultyLevelClient);
     }
 
     @Override
     public List<QuestionDto> findAllByDifficultyLevelId(int id) {
         try {
-            String level = difficultyLevelInterface.getDifficultyLevelById(id).getBody().getLevel();
+            String level = difficultyLevelClient.getDifficultyLevelById(id).getBody().getLevel();
             List<Question> questions = questionDao.findAllByDifficultyLevel(id);
             return questionMapper.toDtos(questions, level);
         } catch (FeignException e) {

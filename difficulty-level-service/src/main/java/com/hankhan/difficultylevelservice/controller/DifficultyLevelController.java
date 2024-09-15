@@ -7,11 +7,10 @@ package com.hankhan.difficultylevelservice.controller;
 
 
 import com.hankhan.difficultylevelservice.dto.DifficultyLevelDto;
-import com.hankhan.difficultylevelservice.model.DifficultyLevel;
 import com.hankhan.difficultylevelservice.service.DifficultyLevelService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 

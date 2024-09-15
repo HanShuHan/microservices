@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
  * @since 20.0.1
  */
 @Configuration
-public class AppConfig {
+public class FakerConfig {
 
     @Bean
     public Faker faker() {

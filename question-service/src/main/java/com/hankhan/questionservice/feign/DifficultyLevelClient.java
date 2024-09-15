@@ -6,6 +6,7 @@
 package com.hankhan.questionservice.feign;
 
 
+import com.hankhan.questionservice.config.feign.FeignConfig;
 import com.hankhan.questionservice.dto.DifficultyLevelDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +23,8 @@ import java.util.List;
  * @version 1.0
  * @since 20.0.1
  */
-@FeignClient(value = "DIFFICULTY-LEVEL-SERVICE", path = "difficulty-levels")
-public interface DifficultyLevelInterface {
+@FeignClient(value = "difficulty-level-service", path = "difficulty-levels", configuration = FeignConfig.class)
+public interface DifficultyLevelClient {
 
     @GetMapping
     ResponseEntity<List<DifficultyLevelDto>> getDifficultyLevelsBy(

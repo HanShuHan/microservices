@@ -2,7 +2,7 @@ package com.hankhan.questionservice;
 
 import com.github.javafaker.Faker;
 import com.hankhan.questionservice.dao.QuestionDao;
-import com.hankhan.questionservice.feign.DifficultyLevelInterface;
+import com.hankhan.questionservice.feign.DifficultyLevelClient;
 import com.hankhan.questionservice.model.Question;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -19,7 +19,7 @@ import java.util.List;
 public class QuestionServiceApplication implements CommandLineRunner {
 
     private QuestionDao questionDao;
-    private DifficultyLevelInterface difficultyLevelInterface;
+    private DifficultyLevelClient difficultyLevelClient;
     private Faker faker;
 
     public static void main(String[] args) {
@@ -32,7 +32,7 @@ public class QuestionServiceApplication implements CommandLineRunner {
     }
 
     private void populateQuestionTable() {
-        if (questionDao.count() == 0L && difficultyLevelInterface.countDifficultyLevels().getBody() > 1L) {
+        if (questionDao.count() == 0L && difficultyLevelClient.countDifficultyLevels().getBody() > 1L) {
             List<Question> questions = new LinkedList<>();
 
             for (int i = 0; i < 20; i++) {
@@ -43,7 +43,7 @@ public class QuestionServiceApplication implements CommandLineRunner {
                         faker.animal().name(),
                         faker.book().author(),
                         faker.random().nextInt(1, 4),
-                        difficultyLevelInterface.getDifficultyLevelsBy(true, 1).getBody().get(0).getId()
+                        difficultyLevelClient.getDifficultyLevelsBy(true, 1).getBody().get(0).getId()
                 );
                 questions.add(question);
             }
