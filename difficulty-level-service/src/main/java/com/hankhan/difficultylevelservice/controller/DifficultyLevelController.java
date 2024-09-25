@@ -9,6 +9,7 @@ package com.hankhan.difficultylevelservice.controller;
 import com.hankhan.difficultylevelservice.dto.DifficultyLevelDto;
 import com.hankhan.difficultylevelservice.service.DifficultyLevelService;
 import lombok.AllArgsConstructor;
+import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +29,8 @@ import java.util.List;
 public class DifficultyLevelController {
 
     private final DifficultyLevelService difficultyLevelService;
+    private static int count = 0;
+    private Environment environment;
 
     @GetMapping
     public ResponseEntity<List<DifficultyLevelDto>> getDifficultyLevelsBy(
@@ -44,6 +47,8 @@ public class DifficultyLevelController {
 
     @GetMapping("{id}")
     public ResponseEntity<DifficultyLevelDto> getDifficultyLevelById(@PathVariable int id) {
+        System.out.println(environment.getProperty("local.server.port") + ": " + ++count);
+
         return ResponseEntity.ok(difficultyLevelService.findById(id));
     }
 

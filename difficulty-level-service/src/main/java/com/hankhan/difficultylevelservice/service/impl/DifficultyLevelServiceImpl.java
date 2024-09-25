@@ -11,9 +11,7 @@ import com.hankhan.difficultylevelservice.dto.DifficultyLevelDto;
 import com.hankhan.difficultylevelservice.mapper.DifficultyLevelMapper;
 import com.hankhan.difficultylevelservice.model.DifficultyLevel;
 import com.hankhan.difficultylevelservice.service.DifficultyLevelService;
-
 import lombok.AllArgsConstructor;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,8 +31,6 @@ public class DifficultyLevelServiceImpl implements DifficultyLevelService {
 
     private DifficultyLevelDao difficultylevelDao;
     private DifficultyLevelMapper difficultyLevelMapper;
-    private Environment environment;
-    private static int count = 0;
 
     @Override
     public List<DifficultyLevelDto> findAllByParams(boolean random, Integer num) {
@@ -59,7 +55,6 @@ public class DifficultyLevelServiceImpl implements DifficultyLevelService {
 
     @Override
     public DifficultyLevelDto findById(int id) {
-        System.out.println(environment.getProperty("local.server.port") + ": " + ++count);
         DifficultyLevel difficultyLevel = difficultylevelDao.findById(id)
                 .orElseThrow(() -> new NoSuchElementException(String.format("Cannot find the difficulty level by id: %d", id)));
         return difficultyLevelMapper.toDto(difficultyLevel);

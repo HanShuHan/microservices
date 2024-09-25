@@ -9,6 +9,7 @@ package com.hankhan.questionservice.controller;
 import com.hankhan.questionservice.dto.QuestionDto;
 import com.hankhan.questionservice.service.QuestionService;
 import lombok.AllArgsConstructor;
+import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +31,8 @@ import java.util.List;
 public class QuestionController {
 
     private QuestionService questionService;
+    private static int count = 0;
+    private Environment environment;
 
     @GetMapping
     public ResponseEntity<List<QuestionDto>> getAllQuestions() {
@@ -43,6 +46,9 @@ public class QuestionController {
 
     @GetMapping("difficultyLevel/{id}")
     public ResponseEntity<List<QuestionDto>> getQuestionsByDifficultyLevelId(@PathVariable int id) {
+        System.out.println(environment.getProperty("local.server.port") + ": " + ++count);
+        System.out.println("eureka.client.service-url: " + environment.getProperty("eureka.client.service-url"));
+
         return ResponseEntity.ok(questionService.findAllByDifficultyLevelId(id));
     }
 
